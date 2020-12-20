@@ -27,6 +27,7 @@ public class Q2 {
     public static void tearDown(){
         reset();
     }
+
     @Test
     public void test1(){
 
@@ -61,6 +62,19 @@ public class Q2 {
 
         System.out.println("hairColor = " + set);
 
+    }
+
+    @Test @DisplayName("With findALL ")
+    public void test3(){
+
+        Response response = get("/people");
+        //System.out.println(response.jsonPath().getList("results.findAll{it.hair_color != \"n/a\" && it.hair_color != \"none\"}.hair_color"));
+        //List<String> list = response.jsonPath().getList("results. .hair_color");
+        List<String> list = response.jsonPath().getList("results.findAll{it.hair_color != \"n/a\" && it.hair_color != \"none\"}.hair_color");
+
+        Set<String> setOfPeopleHairColor =  new TreeSet<>();
+        setOfPeopleHairColor.addAll(list);
+        System.out.println("setOfPeopleHairColor = " + setOfPeopleHairColor);
     }
 
 

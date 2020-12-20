@@ -28,6 +28,7 @@ public class Q1 {
     public static void tearDown(){
         reset();
     }
+
     @Test
     public void testFindAverageHeightOfPeople(){
 
@@ -41,10 +42,34 @@ public class Q1 {
             sum+=listPeople.get(i);
         }
 
+        System.out.println("sum = " + sum);
+        System.out.println("listPeople.size() = " + listPeople.size());
         Integer averageHeight = sum /listPeople.size();
         System.out.println("averageHeight = " + averageHeight);
+
     }
 
 
+    @DisplayName("Average height with Groovy ")
+    @Test
+    public void testFindAverageHeightOfPeople2() {
+
+        int sumOfHeightOfPeople = given()
+                .accept(ContentType.JSON).
+                        when()
+                .get("/people")
+                .jsonPath().getInt("results.height.sum{Integer.parseInt(it)}");
+
+        System.out.println("sumOfHeightOfPeople = " + sumOfHeightOfPeople);
+
+        int countOfPeople = get("/people").jsonPath().getInt("results.size()");
+        System.out.println("countOfPeople = " + countOfPeople);
+
+        System.out.println("The average height of all People " + (sumOfHeightOfPeople / countOfPeople));
+
+
+
+
+    }
 
 }
